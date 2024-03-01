@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	stickerWidth  = 512
-	stickerHeight = 512
+	targetWidth  = 512
+	targetHeight = 512
 )
 
 func main() {
@@ -58,7 +58,7 @@ func processImage(path string) error {
 	}
 
 	// Resize the image to fit sticker specifications
-	resizedImg := resize.Resize(stickerWidth, stickerHeight, img, resize.Lanczos3)
+	resizedImg := resize.Resize(targetWidth, targetHeight, img, resize.Lanczos3)
 
 	// Create a new file for the resized image
 	outFile, err := os.Create(path + "_resized.png")
