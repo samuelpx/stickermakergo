@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/png"
 	"os"
+    "io/fs"
 	"path/filepath"
 
 	"github.com/nfnt/resize" // External library for image resizing
@@ -24,13 +25,13 @@ func main() {
 	}
 
 	// Scan directory for jpg and png files and run processImage if it is an image
-	err = filepath.Walk(dir, checkImage)
+	err = filepath.WalkDir(dir, checkImage)
 	if err != nil {
 		fmt.Println("Error walking directory:", err)
 	}
 }
 
-func checkImage(path string, info os.FileInfo, err error) error {
+func checkImage(path string, info fs.DirEntry, err error) error {
 	if err != nil {
 		return err
 	}
