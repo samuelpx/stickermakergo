@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"io/fs"
 	"os"
-    "io/fs"
 	"path/filepath"
+	"strings"
 
 	"github.com/nfnt/resize" // External library for image resizing
 )
@@ -35,7 +36,7 @@ func checkImage(path string, info fs.DirEntry, err error) error {
 	if err != nil {
 		return err
 	}
-	if !info.IsDir() && (filepath.Ext(path) == ".jpg" || filepath.Ext(path) == ".jpeg" || filepath.Ext(path) == ".png") {
+	if !info.IsDir() && !strings.Contains(info.Name(), "resized") && (filepath.Ext(path) == ".jpg" || filepath.Ext(path) == ".jpeg" || filepath.Ext(path) == ".png") {
 		fmt.Println("Processing:", path)
 		err := processImage(path)
 		if err != nil {
