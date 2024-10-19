@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/nfnt/resize" // External library for image resizing
 	"image"
 	"image/png"
 	"os"
 	"path/filepath"
+
+	"github.com/nfnt/resize" // External library for image resizing
 )
 
 const (
