@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"image"
-	"image/png"
+	 "image/png"
+    _ "image/jpeg"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -59,9 +60,13 @@ func processImage(path string) error {
 	if err != nil {
 		return err
 	}
+    w, h := getRatio(img)
+
+    fmt.Printf("%d is the width of %s !\n%d is the height of %s\n",
+    w, path, h, path)
 
 
-	resizedImg := resize.Resize(targetWidth, targetHeight, img, resize.Lanczos3)
+	resizedImg := resize.Resize(w, h, img, resize.Lanczos3)
 
 
 	outFile, err := os.Create(path + "_resized.png")
@@ -78,4 +83,23 @@ func processImage(path string) error {
 
 	fmt.Println("Resized image saved to:", outFile.Name())
 	return nil
+}
+
+func getRatio(img image.Image) (uint, uint) {
+    w := uint(img.Bounds().Dx())
+    h := uint(img.Bounds().Dy())
+    if w == h {
+        w = 512
+        h = 512
+    } else if w > h  {
+        ratio := 512 / float64(w)
+        w = uint(float64(w) * ratio)
+        h = uint(float64(h) * ratio)
+    } else if h > w  {
+        ratio := 512 / float64(h)
+        w = uint(float64(w) * ratio)
+        h = uint(float64(h) * ratio)
+    }
+
+    return w, h
 }
