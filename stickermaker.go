@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/nfnt/resize" // External library for image resizing
+	"github.com/nfnt/resize"
 )
 
 const (
